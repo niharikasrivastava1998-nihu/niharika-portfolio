@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Niharika | Storyteller & Strategist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* CSS STYLES START HERE */
+        :root {
+            --g-blue: #4285F4;
+            --g-red: #EA4335;
+            --g-yellow: #FBBC04;
+            --g-green: #34A853;
+            --text-dark: #202124;
+            --text-gray: #5f6368;
+            --bg-white: #ffffff;
+            --pill-bg: #f1f3f4;
+            --pill-hover: #e8eaed;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+
+        body {
+            background-color: var(--bg-white) !important; /* Forces White Background */
+            color: var(--text-dark);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 1. BACKGROUND BUBBLES */
+        .bubbles {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; background: white;
+        }
+        .bubble {
+            position: absolute; border-radius: 50%; opacity: 0.15; filter: blur(80px); animation: float 15s infinite ease-in-out;
+        }
+        .b-blue { width: 400px; height: 400px; background: var(--g-blue); top: -10%; left: -10%; }
+        .b-red { width: 300px; height: 300px; background: var(--g-red); top: 20%; right: -5%; animation-delay: -5s; }
+        .b-yellow { width: 350px; height: 350px; background: var(--g-yellow); bottom: -10%; left: 30%; animation-delay: -8s; }
+        .b-green { width: 250px; height: 250px; background: var(--g-green); bottom: 10%; right: 10%; animation-delay: -12s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -30px); }
+        }
+
+        /* 2. TOP NAV (Gmail Style) */
+        .top-nav {
+            display: flex; justify-content: flex-end; align-items: center; padding: 20px 30px; gap: 20px;
+        }
+        .nav-link { text-decoration: none; color: var(--text-dark); font-size: 0.9rem; }
+        .nav-link:hover { text-decoration: underline; }
+        .profile-icon {
+            width: 32px; height: 32px; background: var(--g-blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: default;
+        }
+
+        /* 3. CENTER STAGE */
+        .center-stage {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 5vh;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* LOGO */
+        .logo-area { text-align: center; margin-bottom: 30px; }
+        .logo-area h1 { font-size: 4.5rem; letter-spacing: -2px; line-height: 1; margin-bottom: 10px; }
+        .g-blue { color: var(--g-blue); } .g-red { color: var(--g-red); } .g-yellow { color: var(--g-yellow); } .g-green { color: var(--g-green); }
+        .subtitle { color: var(--text-gray); font-size: 1.1rem; }
+
+        /* SEARCH TABS */
+        .search-tabs-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        .tabs {
+            background: white;
+            box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+            border-radius: 24px;
+            padding: 5px;
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tab-btn:hover { background-color: var(--pill-bg); color: var(--text-dark); }
+        .tab-btn.active { background-color: var(--pill-hover); color: var(--g-blue); font-weight: 500; }
+
+        /* CONTENT DISPLAY */
+        .content-display { width: 90%; min-height: 300px; position: relative; padding-bottom: 50px; }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .active-content { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* CARDS & COMPONENTS */
+        .card-simple {
+            background: white; border: 1px solid #dfe1e5; border-radius: 12px; padding: 25px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .card-simple h3 { margin-bottom: 15px; font-weight: 500; color: var(--g-blue); }
+        .card-simple p { line-height: 1.6; color: var(--text-dark); margin-bottom: 15px; }
+        .tags-cloud { margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
+        .tags-cloud span { background: var(--pill-bg); padding: 6px 15px; border-radius: 100px; font-size: 0.85rem; color: var(--text-dark); border: 1px solid #eee; }
+
+        /* TIMELINE (Experience) */
+        .timeline-clean .timeline-item {
+            display: flex; gap: 20px; padding-bottom: 25px; border-left: 2px solid var(--pill-bg); padding-left: 20px; margin-left: 10px; position: relative;
+        }
+        .timeline-clean .timeline-item::before {
+            content: ''; position: absolute; left: -6px; top: 0; width: 10px; height: 10px; background: var(--g-blue); border-radius: 50%;
+        }
+        .time { width: 120px; font-size: 0.85rem; color: var(--text-gray); flex-shrink: 0; padding-top: 2px; font-weight: 500; }
+        .role-info h4 { font-weight: 500; margin-bottom: 2px; font-size: 1.1rem; }
+        .role-info p { color: var(--text-dark); margin-bottom: 5px; font-weight: 400; }
+        .role-info small { color: var(--text-gray); display: block; line-height: 1.4; }
+
+        /* STATS GRID */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .stat-box {
+            background: white; border: 1px solid #dfe1e5; border-radius: 12px; padding: 30px; text-align: center; transition: 0.3s;
+        }
+        .stat-box:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.1); transform: translateY(-5px); }
+        .stat-box h2 { font-size: 2.5rem; margin-bottom: 5px; }
+        .stat-box p { font-size: 0.9rem; color: var(--text-gray); font-weight: 500; }
+
+        /* CREATIVE LIST */
+        .clean-list { list-style: none; padding-left: 0; }
+        .clean-list li { padding: 12px 0; border-bottom: 1px solid #eee; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; }
+        .clean-list li i { color: var(--g-yellow); }
+
+        /* FOOTER */
+        .bottom-bar {
+            background: #f2f2f2; padding: 15px 30px; font-size: 0.9rem; color: var(--text-gray); border-top: 1px solid #dadce0; text-align: center;
+        }
+        .bottom-bar a { color: var(--text-gray); text-decoration: none; margin: 0 10px; }
+
+        @media (max-width: 600px) {
+            .logo-area h1 { font-size: 3rem; }
+            .tabs { flex-wrap: wrap; justify-content: center; }
+            .timeline-clean .timeline-item { flex-direction: column; gap: 5px; }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bubbles">
+        <div class="bubble b-blue"></div>
+        <div class="bubble b-red"></div>
+        <div class="bubble b-yellow"></div>
+        <div class="bubble b-green"></div>
+    </div>
+
+    <header class="top-nav">
+        <a href="mailto:niharikasrivastava1998@gmail.com" class="nav-link">Email</a>
+        <a href="https://www.linkedin.com/in/niharika-srivastava-47240a185" target="_blank" class="nav-link">LinkedIn</a>
+        <div class="profile-icon">N</div>
+    </header>
+
+    <main class="center-stage">
+        
+        <div class="logo-area">
+            <h1>
+                <span class="g-blue">N</span><span class="g-red">i</span><span class="g-yellow">h</span><span class="g-blue">a</span><span class="g-green">r</span><span class="g-red">i</span><span class="g-yellow">k</span><span class="g-blue">a</span>
+            </h1>
+            <p class="subtitle">Storyteller. Strategist. 8 Years of Impact.</p>
+        </div>
+
+        <div class="search-tabs-container">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="openTab(event, 'profile')">
+                    <i class="fas fa-user"></i> Profile
+                </button>
+                <button class="tab-btn" onclick="openTab(event, 'experience')">
+                    <i class="fas fa-briefcase"></i> Experience
+                </button>
+                <button class="tab-btn" onclick="openTab(event, 'impact')">
+                    <i class="fas fa-chart-pie"></i> Metrics
+                </button>
+                <button class="tab-btn" onclick="openTab(event, 'creative')">
+                    <i class="fas fa-pen-fancy"></i> Creative
+                </button>
+            </div>
+        </div>
+
+        <div class="content-display">
+            
+            <div id="profile" class="tab-content active-content">
+                <div class="card-simple">
+                    [cite_start]<h3>About Me [cite: 434]</h3>
+                    <p>I build communities and drive growth. [cite_start]Currently a <strong>Social Media Manager at Bajaj Finance Limited</strong> [cite: 458][cite_start], I specialize in transforming brand stories into measurable revenue[cite: 437].</p>
+                    <div class="tags-cloud">
+                        [cite_start]<span>Content Strategy [cite: 485]</span>
+                        [cite_start]<span>Community Management [cite: 446]</span>
+                        [cite_start]<span>AI Tools (Gemini/ChatGPT) [cite: 500]</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="experience" class="tab-content">
+                <div class="timeline-clean">
+                    <div class="timeline-item">
+                        <span class="time">2023 - Present</span>
+                        <div class="role-info">
+                            <h4>Bajaj Finance Limited</h4>
+                            [cite_start]<p>Social Media Manager [cite: 458]</p>
+                            <small>Leading brand awareness campaigns & recruitment marketing.</small>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="time">2022 - 2023</span>
+                        <div class="role-info">
+                            <h4>E2E Networks</h4>
+                            [cite_start]<p>Technical Content Manager [cite: 453]</p>
+                            [cite_start]<small>Scaled LinkedIn to 1M+ members[cite: 471].</small>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="time">2021 - 2022</span>
+                        <div class="role-info">
+                            <h4>Scaler Academy</h4>
+                            [cite_start]<p>Marketing Specialist [cite: 456]</p>
+                            [cite_start]<small>Counseled 500+ IT professionals[cite: 479].</small>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="time">2021</span>
+                        <div class="role-info">
+                            <h4>PlanetSpark</h4>
+                            [cite_start]<p>Marketing Specialist [cite: 450]</p>
+                            [cite_start]<small>Exceeded revenue targets by 200-300%[cite: 481].</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="impact" class="tab-content">
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <h2 class="g-blue">1M+</h2>
+                        [cite_start]<p>LinkedIn Community [cite: 446]</p>
+                    </div>
+                    <div class="stat-box">
+                        <h2 class="g-red">500%</h2>
+                        [cite_start]<p>Follower Growth [cite: 440]</p>
+                    </div>
+                    <div class="stat-box">
+                        <h2 class="g-green">300%</h2>
+                        <p>Rev. [cite_start]Target Hit [cite: 443]</p>
+                    </div>
+                    <div class="stat-box">
+                        <h2 class="g-yellow">12K</h2>
+                        [cite_start]<p>Insta Followers [cite: 466]</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="creative" class="tab-content">
+                <div class="card-simple">
+                    <h3>Published Author</h3>
+                    [cite_start]<p>My novel, <em>"To Be Continued..."</em>, is available on Amazon and Blue Rose[cite: 428].</p>
+                    <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+                    <h3>Awards & Honors</h3>
+                    <ul class="clean-list">
+                        [cite_start]<li><i class="fas fa-award"></i> 100 Inspiring Authors of India (2018) [cite: 514]</li>
+                        [cite_start]<li><i class="fas fa-award"></i> Literary Captain - StoryMirror [cite: 518]</li>
+                        [cite_start]<li><i class="fas fa-award"></i> Wingword Poetry Prize (Merit) [cite: 527]</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bottom-bar">
+        <p>India • <a href="mailto:niharikasrivastava1998@gmail.com">Contact</a> • <a href="https://www.linkedin.com/in/niharika-srivastava-47240a185">LinkedIn</a></p>
+    </footer>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabContent, tabBtn;
+            
+            // Hide all tab contents
+            tabContent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabContent.length; i++) {
+                tabContent[i].style.display = "none";
+                tabContent[i].classList.remove("active-content");
+            }
+
+            // Remove active class from buttons
+            tabBtn = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tabBtn.length; i++) {
+                tabBtn[i].className = tabBtn[i].className.replace(" active", "");
+            }
+
+            // Show current tab and add active class to button
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Mouse Movement Parallax for Bubbles
+        document.addEventListener('mousemove', (e) => {
+            const bubbles = document.querySelectorAll('.bubble');
+            bubbles.forEach((b, index) => {
+                const speed = (index + 1) * 20;
+                const xOff = (window.innerWidth / 2 - e.clientX) / speed;
+                const yOff = (window.innerHeight / 2 - e.clientY) / speed;
+                b.style.transform = `translate(${xOff}px, ${yOff}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
