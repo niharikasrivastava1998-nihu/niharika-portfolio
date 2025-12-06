@@ -14,7 +14,7 @@
             --g-red: #EA4335;
             --g-yellow: #FBBC04;
             --g-green: #34A853;
-            --g-purple: #A142F4; /* New color for Projects */
+            --g-purple: #A142F4;
             --linkedin: #0077b5;
             --text-main: #202124;
             --text-light: #5f6368;
@@ -45,14 +45,25 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10; position: relative;
         }
 
-        /* Profile & Text */
+        /* Profile Icon Container */
         .profile-container {
             width: 160px; height: 160px; border-radius: 50%; padding: 4px;
             background: linear-gradient(45deg, var(--g-blue), var(--g-red), var(--g-yellow), var(--g-green));
             margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; align-items: center; justify-content: center;
         }
-        .profile-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid white; background-color: #f0f0f0; }
+        
+        /* The White Circle Inside */
+        .profile-inner {
+            width: 100%; height: 100%; background: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* The Icon Itself */
+        .profile-icon-main {
+            font-size: 5rem; color: var(--text-light);
+        }
 
         .brand-name { font-size: 4.5rem; letter-spacing: -2px; line-height: 1; margin-bottom: 10px; animation: slideUp 1s ease; }
         .tagline { font-size: 1.3rem; color: var(--text-light); margin-bottom: 40px; font-weight: 300; animation: slideUp 1.2s ease; }
@@ -75,7 +86,6 @@
         .mb-work  { background: var(--g-red); width: 130px; height: 130px; animation: float 7s infinite ease-in-out 1s; } 
         .mb-stats { background: var(--g-green); animation: float 8s infinite ease-in-out 0.5s; }
         .mb-ink   { background: var(--g-yellow); animation: float 6s infinite ease-in-out 2s; }
-        /* New Projects Bubble */
         .mb-code  { background: var(--g-purple); width: 125px; height: 125px; animation: float 6.5s infinite ease-in-out 1.2s; }
         .mb-link  { background: var(--linkedin); width: 90px; height: 90px; animation: float 5s infinite ease-in-out 1.5s; }
         .mb-mail  { background: #333; width: 90px; height: 90px; animation: float 9s infinite ease-in-out 3s; }
@@ -158,7 +168,9 @@
     <div class="main-stage">
         
         <div class="profile-container">
-            <img src="ME.jpg" alt="Niharika Srivastava" class="profile-img">
+            <div class="profile-inner">
+                <i class="fas fa-user profile-icon-main"></i>
+            </div>
         </div>
 
         <div class="brand-name">
@@ -261,7 +273,7 @@
                 <h2 class="section-title">Leave a <span style="color: var(--text-main)">Comment</span></h2>
                 <p class="section-intro">Have an idea or just want to say hi? Drop a message below.</p>
             </div>
-            <img src="ME.jpg" alt="Niharika Srivastava" class="profile-img">
+            
             <div class="info-card">
                 <form class="contact-form" action="mailto:niharikasrivastava1998@gmail.com" method="post" enctype="text/plain">
                     <div class="form-group">
