@@ -45,7 +45,7 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10; position: relative;
         }
 
-        /* Profile & Text */
+        /* PROFILE PICTURE */
         .profile-container {
             width: 160px; height: 160px; border-radius: 50%; padding: 4px;
             background: linear-gradient(45deg, var(--g-blue), var(--g-red), var(--g-yellow), var(--g-green));
@@ -85,7 +85,7 @@
 
         .menu-bubble:hover { transform: scale(1.15) translateY(-10px); z-index: 100; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
 
-        /* --- 5. OVERLAYS --- */
+        /* --- 5. OVERLAYS & CONTENT --- */
         .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 2000; opacity: 0; pointer-events: none;
             transform: scale(0.95); transition: all 0.4s ease-in-out; overflow-y: auto; padding: 80px 20px;
@@ -98,7 +98,7 @@
         }
         .close-btn:hover { background: var(--g-red); color: white; transform: rotate(90deg); }
 
-        .container { max-width: 900px; margin: 0 auto; }
+        .container { max-width: 900px; margin: 0 auto; padding-bottom: 60px; }
         .section-header { margin-bottom: 40px; }
         .section-title { font-size: 3rem; color: var(--text-main); line-height: 1.1; margin-bottom: 20px; }
         .section-intro { font-size: 1.3rem; color: var(--text-light); line-height: 1.6; border-left: 4px solid var(--g-blue); padding-left: 20px; }
@@ -117,6 +117,18 @@
         .stat-box { text-align: center; padding: 40px 20px; background: #fafafa; border-radius: 15px; }
         .stat-num { font-size: 3.5rem; font-weight: 700; display: block; margin-bottom: 10px; }
         .stat-label { color: var(--text-light); font-weight: 500; }
+
+        /* Interlink Buttons */
+        .interlink-btn {
+            display: inline-block; margin-top: 30px; padding: 12px 30px; border-radius: 50px; 
+            font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: 0.3s;
+            font-size: 1rem;
+        }
+        .btn-story { background: var(--g-blue); color: white; }
+        .btn-work { background: var(--g-red); color: white; }
+        .btn-code { background: var(--g-purple); color: white; }
+        .btn-contact { background: var(--text-main); color: white; }
+        .interlink-btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 
         /* Code Projects */
         .project-link {
@@ -214,15 +226,81 @@
                 <h2 class="section-title">The Storyteller <span style="color: var(--g-blue)">Strategist</span></h2>
                 <p class="section-intro">
                     "Long before I analyzed engagement metrics, I studied the art of the story."<br><br>
-                    I am a data-driven Social Media Manager with a creative core. My background in English Literature fuels a unique approach to content that connects, converts, and builds lasting brand loyalty.
+                    My career is built on a unique foundation: a Bachelor's in English Literature and a Master's in German Language. This academic training grounds my marketing expertise in critical analysis, cultural context, and narrative structure. I don't just post content; I engineer narratives that drive revenue.
                 </p>
             </div>
             <div class="card-grid">
                 <div class="info-card">
-                    <h3><i class="fas fa-tools" style="color: var(--text-light); margin-right: 10px;"></i> My Toolkit</h3>
-                    <p><strong>Strategy:</strong> Social Media Strategy, Audience Growth, Content Planning.</p>
-                    <p><strong>Tech Stack:</strong> AI Tools (Gemini, ChatGPT), Google Analytics, Semrush, Figma, Hootsuite.</p>
+                    <h3><i class="fas fa-tools" style="color: var(--text-light); margin-right: 10px;"></i> My Modern Toolkit</h3>
+                    <p><strong>Strategy:</strong> Social Media Strategy, Audience Growth, Content Planning, Analytics & Reporting.</p>
+                    <p><strong>Tech Stack:</strong> AI Tools (Gemini, ChatGPT), Google Analytics, Semrush, Figma, Hootsuite, Canva.</p>
                 </div>
+            </div>
+            <div style="text-align: center;">
+                <button class="interlink-btn btn-work" onclick="switchModal('work')">See My Professional Journey <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="work" class="overlay">
+        <div class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></div>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Professional <span style="color: var(--g-red)">Journey</span></h2>
+                <p class="section-intro">From Award-Winning Storyteller to Data-Driven Strategist. A track record of scaling communities and exceeding targets.</p>
+            </div>
+            
+            <div class="card-grid">
+                <div class="info-card" style="border-left: 5px solid var(--g-blue);">
+                    <h3>Bajaj Finance Limited</h3>
+                    <h4>Social Media Manager | Aug 2023 - Present</h4>
+                    <p>Currently managing the digital voice of a financial giant. I lead campaigns that increase brand awareness and drive recruitment marketing for a <strong>1M+ LinkedIn community</strong>. I leverage advanced AI tools to boost conversion rates and maintain high engagement.</p>
+                </div>
+                <div class="info-card" style="border-left: 5px solid var(--g-red);">
+                    <h3>E2E Networks</h3>
+                    <h4>Technical Content Manager | Apr 2022 - Jul 2023</h4>
+                    <p>Tasked with elevating a technical brand. I scaled the LinkedIn community to 1M+ members and achieved a massive <strong>500% follower growth</strong> in just 6 months (2k to 12k), all while maintaining a 40% engagement rate.</p>
+                </div>
+                <div class="info-card" style="border-left: 5px solid var(--g-green);">
+                    <h3>PlanetSpark</h3>
+                    <h4>Marketing Specialist | Feb 2021 - Sep 2021</h4>
+                    <p>Shattering targets. Drove over 1,000 admissions and consistently exceeded monthly revenue targets by <strong>200-300%</strong> through strategic SME collaborations.</p>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <button class="interlink-btn btn-story" onclick="switchModal('impact')">View The Impact Numbers <i class="fas fa-chart-line"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="impact" class="overlay">
+        <div class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></div>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Measurable <span style="color: var(--g-green)">Impact</span></h2>
+                <p class="section-intro">I transform brand stories into numbers that matter. Here is the data behind the creativity.</p>
+            </div>
+            
+            <div class="stats-wrapper">
+                <div class="stat-box">
+                    <span class="stat-num" style="color: var(--g-blue)">1M+</span>
+                    <span class="stat-label">LinkedIn Community Managed</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num" style="color: var(--g-red)">500%</span>
+                    <span class="stat-label">Follower Growth (6 Mo)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num" style="color: var(--g-yellow)">300%</span>
+                    <span class="stat-label">Rev Targets Exceeded</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num" style="color: var(--g-green)">12K</span>
+                    <span class="stat-label">Insta Growth (from 2K)</span>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <button class="interlink-btn btn-code" onclick="switchModal('projects')">Check My Code Projects <i class="fas fa-code"></i></button>
             </div>
         </div>
     </div>
@@ -232,30 +310,64 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Open Source <span style="color: var(--g-purple)">Labs</span></h2>
-                <p class="section-intro">Exploring the intersection of creativity and code. Here are some of my open source contributions.</p>
+                <p class="section-intro">Exploring the intersection of creativity and code. Here are my latest web applications.</p>
             </div>
             
             <div class="card-grid">
                 <div class="info-card" style="border-left: 5px solid var(--g-purple);">
                     <h3>Total Impact Calculator</h3>
                     <p>A tool designed to measure and visualize cumulative impact metrics.</p>
-                    
-                    <a href="https://niharikasrivastava1998-nihu.github.io/socialmeter/" target="_blank" class="project-link"><i class="fab fa-github"></i> View on GitHub</a>
+                    <a href="https://niharikasrivastava26.github.io/Total-Impact-Calculator/" target="_blank" class="project-link"><i class="fab fa-github"></i> View Live Project</a>
                 </div>
 
                 <div class="info-card" style="border-left: 5px solid var(--g-purple);">
                     <h3>Day.OS - AI Life Planner</h3>
                     <p>An intelligent system to organize daily tasks and optimize productivity using AI.</p>
-                    
-                    <a href="https://niharikasrivastava1998-nihu.github.io/Day.OS/" target="_blank" class="project-link"><i class="fab fa-github"></i> View on GitHub</a>
+                    <a href="https://niharikasrivastava26.github.io/Day.OS/" target="_blank" class="project-link"><i class="fab fa-github"></i> View Live Project</a>
                 </div>
 
                 <div class="info-card" style="border-left: 5px solid var(--g-purple);">
                     <h3>VeggieSmart</h3>
                     <p>Vibrant Meal & Sip Planner. A colorful approach to healthy eating planning.</p>
-                    
-                    <a href="https://niharikasrivastava1998-nihu.github.io/Veggiesmart/" target="_blank" class="project-link"><i class="fab fa-github"></i> View on GitHub</a>
+                    <a href="https://niharikasrivastava26.github.io/VeggieSmart/" target="_blank" class="project-link"><i class="fab fa-github"></i> View Live Project</a>
                 </div>
+            </div>
+            <div style="text-align: center;">
+                <button class="interlink-btn btn-contact" onclick="switchModal('contact')">Have Feedback? <i class="fas fa-comment"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="ink" class="overlay">
+        <div class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></div>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Ink & <span style="color: var(--g-yellow)">Art</span></h2>
+                <p class="section-intro">Writing is not just a skill; it is my origin story. Before I was a marketer, I was an author.</p>
+            </div>
+            
+            <div class="card-grid">
+                <div class="info-card" style="background: #fffdf5; border-color: #ffeeba;">
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <i class="fas fa-book-open" style="font-size: 3rem; color: var(--g-yellow);"></i>
+                        <div>
+                            <h3>Published Novel: "To Be Continued..."</h3>
+                            <p>Available on Amazon and Blue Rose. A debut novel exploring human resilience and storytelling.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3><i class="fas fa-medal" style="color: var(--g-blue)"></i> Honors & Recognition</h3>
+                    <ul style="list-style: none; padding-top: 10px; line-height: 2.2;">
+                        <li><strong>100 Inspiring Authors of India (2018)</strong> - The Indian Awaz</li>
+                        <li><strong>Literary Captain</strong> - StoryMirror (Army of Literary Warriors)</li>
+                        <li><strong>Wingword Poetry Prize</strong> - Certificate of Merit (2018)</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <button class="interlink-btn btn-contact" onclick="switchModal('contact')">Let's Write History <i class="fas fa-envelope"></i></button>
             </div>
         </div>
     </div>
@@ -283,99 +395,6 @@
         </div>
     </div>
 
-    <div id="work" class="overlay">
-        <div class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></div>
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Professional <span style="color: var(--g-red)">Journey</span></h2>
-                <p class="section-intro">From Award-Winning Storyteller to Data-Driven Strategist.</p>
-            </div>
-            
-            <div class="card-grid">
-                <div class="info-card" style="border-left: 5px solid var(--g-blue);">
-                    <h3>Bajaj Finance Limited</h3>
-                    <h4>Social Media Manager | Aug 2023 - Present</h4>
-                    <p>Managing a massive <strong>1M+ LinkedIn community</strong>. Utilizing AI to boost conversion rates and maintaining a 40% engagement rate.</p>
-                </div>
-                <div class="info-card" style="border-left: 5px solid var(--g-red);">
-                    <h3>E2E Networks</h3>
-                    <h4>Technical Content Manager | Apr 2022 - Jul 2023</h4>
-                    <p>Scaled the LinkedIn community to 1M+ members. Achieved <strong>500% follower growth</strong> in just 6 months.</p>
-                </div>
-                <div class="info-card" style="border-left: 5px solid var(--g-yellow);">
-                    <h3>Scaler Academy</h3>
-                    <h4>Marketing Specialist | Dec 2021 - Mar 2022</h4>
-                    <p>Counseled over 500 IT professionals and consistently exceeded revenue targets.</p>
-                </div>
-                <div class="info-card" style="border-left: 5px solid var(--g-green);">
-                    <h3>PlanetSpark</h3>
-                    <h4>Marketing Specialist | Feb 2021 - Sep 2021</h4>
-                    <p>Drove over 1,000 admissions and exceeded monthly revenue targets by 200-300%.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="impact" class="overlay">
-        <div class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></div>
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Measurable <span style="color: var(--g-green)">Impact</span></h2>
-                <p class="section-intro">I transform brand stories into numbers that matter.</p>
-            </div>
-            
-            <div class="stats-wrapper">
-                <div class="stat-box">
-                    <span class="stat-num" style="color: var(--g-blue)">1M+</span>
-                    <span class="stat-label">LinkedIn Community</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-num" style="color: var(--g-red)">500%</span>
-                    <span class="stat-label">Follower Growth</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-num" style="color: var(--g-yellow)">300%</span>
-                    <span class="stat-label">Revenue Targets Hit</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-num" style="color: var(--g-green)">12K</span>
-                    <span class="stat-label">Insta Growth</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="ink" class="overlay">
-        <div class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></div>
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Ink & <span style="color: var(--g-yellow)">Art</span></h2>
-                <p class="section-intro">Before I was a marketer, I was an author.</p>
-            </div>
-            
-            <div class="card-grid">
-                <div class="info-card" style="background: #fffdf5; border-color: #ffeeba;">
-                    <div style="display: flex; align-items: center; gap: 20px;">
-                        <i class="fas fa-book-open" style="font-size: 3rem; color: var(--g-yellow);"></i>
-                        <div>
-                            <h3>Published Novel: "To Be Continued..."</h3>
-                            <p>Available on Amazon and Blue Rose.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="info-card">
-                    <h3><i class="fas fa-medal" style="color: var(--g-blue)"></i> Honors & Recognition</h3>
-                    <ul style="list-style: none; padding-top: 10px; line-height: 2.2;">
-                        <li><strong>100 Inspiring Authors of India (2018)</strong> - The Indian Awaz</li>
-                        <li><strong>Literary Captain</strong> - StoryMirror</li>
-                        <li><strong>Wingword Poetry Prize</strong> - Certificate of Merit (2018)</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
         // MOUSE PARALLAX
         document.addEventListener('mousemove', (e) => {
@@ -399,6 +418,14 @@
         function closeModal() {
             const overlays = document.querySelectorAll('.overlay');
             overlays.forEach(o => o.classList.remove('active'));
+        }
+
+        // New function to switch between bubbles
+        function switchModal(newId) {
+            closeModal();
+            setTimeout(() => {
+                openModal(newId);
+            }, 300); // Small delay for smooth transition
         }
 
         document.addEventListener('keydown', function(event) {
