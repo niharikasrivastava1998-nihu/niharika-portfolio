@@ -8,13 +8,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- CORE SETTINGS --- */
+        /* --- 1. CORE VARIABLES --- */
         :root {
             --g-blue: #4285F4;
             --g-red: #EA4335;
             --g-yellow: #FBBC04;
             --g-green: #34A853;
-            --linkedin-blue: #0077b5;
+            --g-purple: #A142F4; /* New color for Projects */
+            --linkedin: #0077b5;
             --text-main: #202124;
             --text-light: #5f6368;
             --bg-white: #ffffff;
@@ -25,194 +26,123 @@
         body {
             background-color: var(--bg-white) !important;
             color: var(--text-main);
-            height: 100vh;
-            overflow: hidden; 
+            min-height: 100vh;
+            overflow: hidden;
             position: relative;
         }
 
-        /* --- BACKGROUND SPLASH (Bubbles) --- */
-        .splash-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;
-        }
-        .splash {
-            position: absolute; border-radius: 50%; opacity: 0.12; filter: blur(60px);
-            transition: transform 0.2s ease-out;
-        }
-        .s-1 { width: 500px; height: 500px; background: var(--g-blue); top: -10%; left: -10%; }
-        .s-2 { width: 400px; height: 400px; background: var(--g-red); bottom: -10%; right: -10%; }
-        .s-3 { width: 300px; height: 300px; background: var(--g-yellow); top: 20%; right: 10%; }
-        .s-4 { width: 350px; height: 350px; background: var(--g-green); bottom: 10%; left: 10%; }
+        /* --- 2. BACKGROUND SPLASHES --- */
+        .splash-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+        .splash { position: absolute; border-radius: 50%; opacity: 0.08; filter: blur(80px); transition: transform 0.1s ease-out; }
+        .s-1 { width: 600px; height: 600px; background: var(--g-blue); top: -15%; left: -15%; }
+        .s-2 { width: 500px; height: 500px; background: var(--g-red); bottom: -10%; right: -10%; }
+        .s-3 { width: 300px; height: 300px; background: var(--g-yellow); top: 30%; right: 20%; }
+        .s-4 { width: 400px; height: 400px; background: var(--g-green); bottom: 10%; left: 10%; }
 
-        /* --- MAIN STAGE --- */
+        /* --- 3. MAIN STAGE --- */
         .main-stage {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
+            height: 100vh;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10; position: relative;
         }
 
-        .brand-name {
-            font-size: 5rem;
-            letter-spacing: -2px;
-            margin-bottom: 10px;
-            animation: fadeIn Down 1s ease;
+        /* Profile & Text */
+        .profile-container {
+            width: 160px; height: 160px; border-radius: 50%; padding: 4px;
+            background: linear-gradient(45deg, var(--g-blue), var(--g-red), var(--g-yellow), var(--g-green));
+            margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .tagline {
-            font-size: 1.2rem;
-            color: var(--text-light);
-            margin-bottom: 50px;
-            animation: fadeIn 1.5s ease;
-        }
+        .profile-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid white; background-color: #f0f0f0; }
 
-        /* --- FLOATING MENU BUBBLES --- */
+        .brand-name { font-size: 4.5rem; letter-spacing: -2px; line-height: 1; margin-bottom: 10px; animation: slideUp 1s ease; }
+        .tagline { font-size: 1.3rem; color: var(--text-light); margin-bottom: 40px; font-weight: 300; animation: slideUp 1.2s ease; }
+
+        /* --- 4. BUBBLE MENU --- */
         .bubble-grid {
-            display: flex;
-            gap: 30px;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            max-width: 900px;
+            display: flex; gap: 20px; justify-content: center; align-items: center; flex-wrap: wrap; max-width: 900px;
         }
 
         .menu-bubble {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            cursor: pointer;
-            text-decoration: none; /* For link tags */
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            text-align: center;
+            width: 110px; height: 110px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: white; cursor: pointer; text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); position: relative; text-align: center;
         }
+        .menu-bubble i { font-size: 1.6rem; margin-bottom: 6px; }
+        .menu-bubble span { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
 
-        .menu-bubble i { font-size: 1.8rem; margin-bottom: 8px; }
-        .menu-bubble span { font-size: 0.9rem; font-weight: 600; letter-spacing: 0.5px; }
-
-        /* Bubble Colors & Positions */
+        /* Bubble Styles */
         .mb-story { background: var(--g-blue); animation: float 6s infinite ease-in-out; }
-        .mb-work  { background: var(--g-red); width: 150px; height: 150px; animation: float 6s infinite ease-in-out 1s; } 
-        .mb-stats { background: var(--g-green); animation: float 6s infinite ease-in-out 2s; }
-        .mb-ink   { background: var(--g-yellow); animation: float 6s infinite ease-in-out 3s; }
-        
-        /* New LinkedIn & Mail Bubbles */
-        .mb-link  { background: var(--linkedin-blue); width: 110px; height: 110px; animation: float 6s infinite ease-in-out 1.5s; }
-        .mb-mail  { background: #333; width: 110px; height: 110px; animation: float 6s infinite ease-in-out 4s; }
+        .mb-work  { background: var(--g-red); width: 130px; height: 130px; animation: float 7s infinite ease-in-out 1s; } 
+        .mb-stats { background: var(--g-green); animation: float 8s infinite ease-in-out 0.5s; }
+        .mb-ink   { background: var(--g-yellow); animation: float 6s infinite ease-in-out 2s; }
+        /* New Projects Bubble */
+        .mb-code  { background: var(--g-purple); width: 125px; height: 125px; animation: float 6.5s infinite ease-in-out 1.2s; }
+        .mb-link  { background: var(--linkedin); width: 90px; height: 90px; animation: float 5s infinite ease-in-out 1.5s; }
+        .mb-mail  { background: #333; width: 90px; height: 90px; animation: float 9s infinite ease-in-out 3s; }
 
-        .menu-bubble:hover {
-            transform: scale(1.2) translateY(-10px);
-            z-index: 100;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
+        .menu-bubble:hover { transform: scale(1.15) translateY(-10px); z-index: 100; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        /* --- FULL SCREEN OVERLAY (DEEP DIVE) --- */
+        /* --- 5. OVERLAYS --- */
         .overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: white;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transform: scale(0.9);
-            transition: all 0.5s ease;
-            overflow-y: auto;
-            padding: 60px 20px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 2000; opacity: 0; pointer-events: none;
+            transform: scale(0.95); transition: all 0.4s ease-in-out; overflow-y: auto; padding: 80px 20px;
         }
-
-        .overlay.active {
-            opacity: 1;
-            pointer-events: all;
-            transform: scale(1);
-        }
+        .overlay.active { opacity: 1; pointer-events: all; transform: scale(1); }
 
         .close-btn {
-            position: fixed;
-            top: 30px;
-            right: 40px;
-            font-size: 2rem;
-            color: var(--text-light);
-            cursor: pointer;
-            transition: 0.3s;
-            z-index: 1001;
-            background: #f1f3f4;
-            width: 50px; height: 50px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
+            position: fixed; top: 30px; right: 40px; font-size: 1.5rem; color: var(--text-light); cursor: pointer; transition: 0.3s; z-index: 2001;
+            background: #f1f3f4; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
         }
         .close-btn:hover { background: var(--g-red); color: white; transform: rotate(90deg); }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .section-header { margin-bottom: 40px; }
+        .section-title { font-size: 3rem; color: var(--text-main); line-height: 1.1; margin-bottom: 20px; }
+        .section-intro { font-size: 1.3rem; color: var(--text-light); line-height: 1.6; border-left: 4px solid var(--g-blue); padding-left: 20px; }
 
-        .section-title {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            color: var(--text-main);
+        .card-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+        .info-card {
+            background: #fff; padding: 35px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border: 1px solid #f0f0f0; transition: transform 0.3s;
         }
-        .section-intro {
-            font-size: 1.4rem;
-            color: var(--text-light);
-            line-height: 1.6;
-            margin-bottom: 50px;
-            border-left: 5px solid var(--g-blue);
-            padding-left: 20px;
-        }
-        
-        .content-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
-        
-        .job-card {
-            background: #fff;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            border: 1px solid #eee;
-            transition: 0.3s;
-        }
-        .job-card:hover { transform: translateY(-5px); border-color: var(--g-blue); }
-        .job-card h3 { font-size: 1.8rem; margin-bottom: 5px; }
-        .job-card h4 { color: var(--g-blue); font-weight: 500; margin-bottom: 15px; }
-        .job-card p { color: var(--text-light); line-height: 1.6; }
+        .info-card:hover { transform: translateY(-5px); border-color: var(--g-blue); }
+        .info-card h3 { font-size: 1.6rem; margin-bottom: 5px; }
+        .info-card h4 { color: var(--g-blue); font-weight: 500; margin-bottom: 15px; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .info-card p { color: var(--text-light); line-height: 1.7; margin-bottom: 10px; }
 
-        .stat-huge { font-size: 4rem; font-weight: 700; margin-bottom: 10px; }
-        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
-        
-        .book-feature {
-            background: #fffbe6;
-            padding: 40px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            border: 1px solid #ffeeba;
+        /* Stats */
+        .stats-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .stat-box { text-align: center; padding: 40px 20px; background: #fafafa; border-radius: 15px; }
+        .stat-num { font-size: 3.5rem; font-weight: 700; display: block; margin-bottom: 10px; }
+        .stat-label { color: var(--text-light); font-weight: 500; }
+
+        /* Code Projects */
+        .project-link {
+            display: inline-block; margin-top: 15px; padding: 10px 20px; background: var(--g-purple); color: white; text-decoration: none; border-radius: 30px; font-weight: 500; transition: 0.3s;
         }
-        
-        /* --- UTILS --- */
-        .g-blue { color: var(--g-blue); }
-        .g-red { color: var(--g-red); }
-        .g-green { color: var(--g-green); }
-        .g-yellow { color: var(--g-yellow); }
+        .project-link:hover { background: #8e35db; transform: translateX(5px); }
+
+        /* Comment Form */
+        .contact-form { display: flex; flex-direction: column; gap: 15px; margin-top: 30px; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 10px; font-size: 1rem; outline: none; transition: 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--g-blue); box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1); }
+        .send-btn {
+            padding: 15px 30px; background: var(--text-main); color: white; border: none; border-radius: 10px; font-size: 1.1rem; cursor: pointer; transition: 0.3s; width: fit-content;
+        }
+        .send-btn:hover { background: var(--g-blue); }
+
+        /* Animations */
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes popIn { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+        @keyframes slideUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
 
         /* Mobile */
         @media (max-width: 768px) {
-            .brand-name { font-size: 3.5rem; }
+            .brand-name { font-size: 3rem; }
             .bubble-grid { gap: 15px; }
-            .menu-bubble { width: 100px; height: 100px; }
-            .section-title { font-size: 2.5rem; }
-            .book-feature { flex-direction: column; text-align: center; }
+            .menu-bubble { width: 90px; height: 90px; }
+            .section-title { font-size: 2.2rem; }
         }
     </style>
 </head>
@@ -226,8 +156,13 @@
     </div>
 
     <div class="main-stage">
+        
+        <div class="profile-container">
+            <img src="ME.jpg" alt="Niharika Srivastava" class="profile-img">
+        </div>
+
         <div class="brand-name">
-            <span class="g-blue">N</span><span class="g-red">i</span><span class="g-yellow">h</span><span class="g-blue">a</span><span class="g-green">r</span><span class="g-red">i</span><span class="g-yellow">k</span><span class="g-blue">a</span>
+            <span style="color: var(--g-blue)">N</span><span style="color: var(--g-red)">i</span><span style="color: var(--g-yellow)">h</span><span style="color: var(--g-blue)">a</span><span style="color: var(--g-green)">r</span><span style="color: var(--g-red)">i</span><span style="color: var(--g-yellow)">k</span><span style="color: var(--g-blue)">a</span>
         </div>
         <p class="tagline">Storyteller. Strategist. 8 Years of Impact.</p>
 
@@ -236,44 +171,108 @@
                 <i class="fas fa-user-astronaut"></i>
                 <span>My Story</span>
             </div>
+            
             <div class="menu-bubble mb-work" onclick="openModal('work')">
                 <i class="fas fa-briefcase"></i>
                 <span>Journey</span>
             </div>
+            
             <div class="menu-bubble mb-stats" onclick="openModal('impact')">
                 <i class="fas fa-chart-line"></i>
                 <span>Impact</span>
             </div>
+            
             <div class="menu-bubble mb-ink" onclick="openModal('ink')">
                 <i class="fas fa-feather-alt"></i>
-                <span>Ink & Art</span>
+                <span>Creative</span>
             </div>
-            
+
+            <div class="menu-bubble mb-code" onclick="openModal('projects')">
+                <i class="fas fa-code"></i>
+                <span>Projects</span>
+            </div>
+
             <a href="https://www.linkedin.com/in/niharika-srivastava-47240a185" target="_blank" class="menu-bubble mb-link">
                 <i class="fab fa-linkedin-in"></i>
                 <span>LinkedIn</span>
             </a>
 
-            <a href="mailto:niharikasrivastava1998@gmail.com" class="menu-bubble mb-mail">
-                <i class="fas fa-envelope"></i>
-                <span>Mail</span>
-            </a>
+            <div class="menu-bubble mb-mail" onclick="openModal('contact')">
+                <i class="fas fa-comment-dots"></i>
+                <span>Connect</span>
+            </div>
         </div>
     </div>
 
     <div id="story" class="overlay">
         <div class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></div>
         <div class="container">
-            <h2 class="section-title">The Storyteller <span class="g-blue">Strategist</span></h2>
-            <p class="section-intro">
-                [cite_start]"Long before I analyzed engagement metrics, I studied the art of the story." [cite: 73]
-                <br><br>
-                I am a data-driven Social Media Manager with a creative core. [cite_start]My background in English Literature fuels a unique approach to content that connects, converts, and builds lasting brand loyalty[cite: 6, 7]. I don't just post content; I engineer narratives that drive revenue.
-            </p>
-            <div class="job-card">
-                [cite_start]<h3>My Toolkit [cite: 53]</h3>
-                [cite_start]<p><strong>Strategy:</strong> Social Media Strategy, Audience Growth, Analytics & Reporting[cite: 55, 57, 58].</p>
-                [cite_start]<p style="margin-top: 10px;"><strong>Tech:</strong> AI (Gemini, ChatGPT), Google Analytics, Semrush, Figma[cite: 65, 67, 69].</p>
+            <div class="section-header">
+                <h2 class="section-title">The Storyteller <span style="color: var(--g-blue)">Strategist</span></h2>
+                <p class="section-intro">
+                    "Long before I analyzed engagement metrics, I studied the art of the story."<br><br>
+                    I am a data-driven Social Media Manager with a creative core. My background in English Literature fuels a unique approach to content that connects, converts, and builds lasting brand loyalty.
+                </p>
+            </div>
+            <div class="card-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-tools" style="color: var(--text-light); margin-right: 10px;"></i> My Toolkit</h3>
+                    <p><strong>Strategy:</strong> Social Media Strategy, Audience Growth, Content Planning.</p>
+                    <p><strong>Tech Stack:</strong> AI Tools (Gemini, ChatGPT), Google Analytics, Semrush, Figma, Hootsuite.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="projects" class="overlay">
+        <div class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></div>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Open Source <span style="color: var(--g-purple)">Labs</span></h2>
+                <p class="section-intro">Exploring the intersection of creativity and code. Here are some of my open source contributions.</p>
+            </div>
+            
+            <div class="card-grid">
+                <div class="info-card" style="border-left: 5px solid var(--g-purple);">
+                    <h3>Total Impact Calculator</h3>
+                    <p>A tool designed to measure and visualize cumulative impact metrics.</p>
+                    <a href="#" target="_blank" class="project-link"><i class="fab fa-github"></i> View on GitHub</a>
+                </div>
+
+                <div class="info-card" style="border-left: 5px solid var(--g-purple);">
+                    <h3>Day.OS - AI Life Planner</h3>
+                    <p>An intelligent system to organize daily tasks and optimize productivity using AI.</p>
+                    <a href="#" target="_blank" class="project-link"><i class="fab fa-github"></i> View on GitHub</a>
+                </div>
+
+                <div class="info-card" style="border-left: 5px solid var(--g-purple);">
+                    <h3>VeggieSmart</h3>
+                    <p>Vibrant Meal & Sip Planner. A colorful approach to healthy eating planning.</p>
+                    <a href="#" target="_blank" class="project-link"><i class="fab fa-github"></i> View on GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact" class="overlay">
+        <div class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></div>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Leave a <span style="color: var(--text-main)">Comment</span></h2>
+                <p class="section-intro">Have an idea or just want to say hi? Drop a message below.</p>
+            </div>
+            
+            <div class="info-card">
+                <form class="contact-form" action="mailto:niharikasrivastava1998@gmail.com" method="post" enctype="text/plain">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" rows="5" placeholder="Write your comment or message here..." required></textarea>
+                    </div>
+                    <button type="submit" class="send-btn"><i class="fas fa-paper-plane"></i> Send Message</button>
+                </form>
+                <p style="margin-top: 20px; font-size: 0.9rem; color: #888;">*This will open your email client to send the message directly to me.</p>
             </div>
         </div>
     </div>
@@ -281,26 +280,31 @@
     <div id="work" class="overlay">
         <div class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></div>
         <div class="container">
-            <h2 class="section-title">Professional <span class="g-red">Journey</span></h2>
-            <p class="section-intro">From Award-Winning Storyteller to Data-Driven Strategist. [cite_start]A track record of scaling communities and exceeding targets[cite: 3].</p>
+            <div class="section-header">
+                <h2 class="section-title">Professional <span style="color: var(--g-red)">Journey</span></h2>
+                <p class="section-intro">From Award-Winning Storyteller to Data-Driven Strategist.</p>
+            </div>
             
-            <div class="content-grid">
-                <div class="job-card" style="border-left: 5px solid var(--g-blue);">
+            <div class="card-grid">
+                <div class="info-card" style="border-left: 5px solid var(--g-blue);">
                     <h3>Bajaj Finance Limited</h3>
-                    <h4>Social Media Manager | [cite_start]Aug 2023 - Present [cite: 27]</h4>
-                    <p>Currently managing the digital voice of a financial giant. I lead campaigns that increase brand awareness and drive recruitment marketing for a <strong>1M+ LinkedIn community</strong> and <strong>10K+ Instagram followers</strong>. [cite_start]I leverage advanced AI tools to boost conversion rates and maintain high engagement[cite: 624, 625].</p>
+                    <h4>Social Media Manager | Aug 2023 - Present</h4>
+                    <p>Managing a massive <strong>1M+ LinkedIn community</strong>. Utilizing AI to boost conversion rates and maintaining a 40% engagement rate.</p>
                 </div>
-
-                <div class="job-card" style="border-left: 5px solid var(--g-red);">
+                <div class="info-card" style="border-left: 5px solid var(--g-red);">
                     <h3>E2E Networks</h3>
-                    <h4>Technical Content Manager | [cite_start]Apr 2022 - Jul 2023 [cite: 22]</h4>
-                    <p>Tasked with elevating a technical brand. [cite_start]I scaled the LinkedIn community to 1M+ members and achieved a massive <strong>500% follower growth</strong> in just 6 months (2k to 12k), all while maintaining a 40% engagement rate[cite: 33, 34, 35, 36, 40].</p>
+                    <h4>Technical Content Manager | Apr 2022 - Jul 2023</h4>
+                    <p>Scaled the LinkedIn community to 1M+ members. Achieved <strong>500% follower growth</strong> in just 6 months.</p>
                 </div>
-
-                <div class="job-card" style="border-left: 5px solid var(--g-yellow);">
+                <div class="info-card" style="border-left: 5px solid var(--g-yellow);">
                     <h3>Scaler Academy</h3>
-                    <h4>Marketing Specialist | [cite_start]Dec 2021 - Mar 2022 [cite: 25]</h4>
-                    <p>Focused on strategic communication. [cite_start]I counseled over 500 IT professionals, optimizing lead generation and consistently exceeding revenue targets[cite: 48].</p>
+                    <h4>Marketing Specialist | Dec 2021 - Mar 2022</h4>
+                    <p>Counseled over 500 IT professionals and consistently exceeded revenue targets.</p>
+                </div>
+                <div class="info-card" style="border-left: 5px solid var(--g-green);">
+                    <h3>PlanetSpark</h3>
+                    <h4>Marketing Specialist | Feb 2021 - Sep 2021</h4>
+                    <p>Drove over 1,000 admissions and exceeded monthly revenue targets by 200-300%.</p>
                 </div>
             </div>
         </div>
@@ -309,25 +313,27 @@
     <div id="impact" class="overlay">
         <div class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></div>
         <div class="container">
-            <h2 class="section-title">Measurable <span class="g-green">Impact</span></h2>
-            <p class="section-intro">I transform brand stories into numbers that matter. Here is the data behind the creativity.</p>
+            <div class="section-header">
+                <h2 class="section-title">Measurable <span style="color: var(--g-green)">Impact</span></h2>
+                <p class="section-intro">I transform brand stories into numbers that matter.</p>
+            </div>
             
-            <div class="stat-grid">
-                <div class="job-card" style="text-align: center;">
-                    <div class="stat-huge g-blue">1M+</div>
-                    [cite_start]<p>LinkedIn Community Managed [cite: 14]</p>
+            <div class="stats-wrapper">
+                <div class="stat-box">
+                    <span class="stat-num" style="color: var(--g-blue)">1M+</span>
+                    <span class="stat-label">LinkedIn Community</span>
                 </div>
-                <div class="job-card" style="text-align: center;">
-                    <div class="stat-huge g-red">500%</div>
-                    [cite_start]<p>Follower Growth (6 Months) [cite: 9, 33]</p>
+                <div class="stat-box">
+                    <span class="stat-num" style="color: var(--g-red)">500%</span>
+                    <span class="stat-label">Follower Growth</span>
                 </div>
-                <div class="job-card" style="text-align: center;">
-                    <div class="stat-huge g-yellow">300%</div>
-                    [cite_start]<p>Revenue Targets Exceeded [cite: 12, 47]</p>
+                <div class="stat-box">
+                    <span class="stat-num" style="color: var(--g-yellow)">300%</span>
+                    <span class="stat-label">Revenue Targets Hit</span>
                 </div>
-                <div class="job-card" style="text-align: center;">
-                    <div class="stat-huge g-green">12K</div>
-                    [cite_start]<p>Instagram Growth (From 2K) [cite: 34, 35]</p>
+                <div class="stat-box">
+                    <span class="stat-num" style="color: var(--g-green)">12K</span>
+                    <span class="stat-label">Insta Growth</span>
                 </div>
             </div>
         </div>
@@ -336,25 +342,28 @@
     <div id="ink" class="overlay">
         <div class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></div>
         <div class="container">
-            <h2 class="section-title">The <span class="g-yellow">Author</span></h2>
-            <p class="section-intro">Writing is not just a skill; it is my origin story. Before I was a marketer, I was an author.</p>
-            
-            <div class="book-feature">
-                <i class="fas fa-book-open" style="font-size: 4rem; color: var(--g-yellow);"></i>
-                <div>
-                    [cite_start]<h3>Published Novel: "To Be Continued..." [cite: 157]</h3>
-                    <p>Available on Amazon and Blue Rose. A debut novel that explores the depth of human resilience and storytelling. This book established my foundation in narrative structure.</p>
-                </div>
+            <div class="section-header">
+                <h2 class="section-title">Ink & <span style="color: var(--g-yellow)">Art</span></h2>
+                <p class="section-intro">Before I was a marketer, I was an author.</p>
             </div>
+            
+            <div class="card-grid">
+                <div class="info-card" style="background: #fffdf5; border-color: #ffeeba;">
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <i class="fas fa-book-open" style="font-size: 3rem; color: var(--g-yellow);"></i>
+                        <div>
+                            <h3>Published Novel: "To Be Continued..."</h3>
+                            <p>Available on Amazon and Blue Rose.</p>
+                        </div>
+                    </div>
+                </div>
 
-            <div style="margin-top: 40px;">
-                <h3>Honors & Recognition</h3>
-                <div class="job-card" style="margin-top: 20px;">
-                    <ul style="list-style: none; padding: 0; line-height: 2;">
-                        [cite_start]<li><i class="fas fa-medal g-red"></i> <strong>100 Inspiring Authors of India (2018)</strong> - The Indian Awaz [cite: 83]</li>
-                        [cite_start]<li><i class="fas fa-medal g-blue"></i> <strong>Literary Captain</strong> - StoryMirror (Army of Literary Warriors) [cite: 87]</li>
-                        [cite_start]<li><i class="fas fa-medal g-green"></i> <strong>Wingword Poetry Prize</strong> - Certificate of Merit (2018) [cite: 96]</li>
-                        [cite_start]<li><i class="fas fa-medal g-yellow"></i> <strong>Teach India Intern</strong> - Times of India CSR Initiative [cite: 138, 147]</li>
+                <div class="info-card">
+                    <h3><i class="fas fa-medal" style="color: var(--g-blue)"></i> Honors & Recognition</h3>
+                    <ul style="list-style: none; padding-top: 10px; line-height: 2.2;">
+                        <li><strong>100 Inspiring Authors of India (2018)</strong> - The Indian Awaz</li>
+                        <li><strong>Literary Captain</strong> - StoryMirror</li>
+                        <li><strong>Wingword Poetry Prize</strong> - Certificate of Merit (2018)</li>
                     </ul>
                 </div>
             </div>
@@ -362,7 +371,7 @@
     </div>
 
     <script>
-        // MOUSE PARALLAX EFFECT FOR BACKGROUND
+        // MOUSE PARALLAX
         document.addEventListener('mousemove', (e) => {
             const splashes = document.querySelectorAll('.splash');
             const x = e.clientX / window.innerWidth;
@@ -376,7 +385,7 @@
             });
         });
 
-        // MODAL LOGIC
+        // MODAL FUNCTIONS
         function openModal(id) {
             document.getElementById(id).classList.add('active');
         }
@@ -386,7 +395,6 @@
             overlays.forEach(o => o.classList.remove('active'));
         }
 
-        // Close modal on escape key
         document.addEventListener('keydown', function(event) {
             if (event.key === "Escape") {
                 closeModal();
