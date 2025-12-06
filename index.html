@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* CSS STYLES START HERE */
+        /* --- CSS STYLES --- */
         :root {
             --g-blue: #4285F4;
             --g-red: #EA4335;
@@ -17,168 +17,162 @@
             --text-dark: #202124;
             --text-gray: #5f6368;
             --bg-white: #ffffff;
-            --pill-bg: #f1f3f4;
-            --pill-hover: #e8eaed;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
 
         body {
-            background-color: var(--bg-white) !important; /* Forces White Background */
+            background-color: var(--bg-white);
             color: var(--text-dark);
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* 1. BACKGROUND BUBBLES */
-        .bubbles {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; background: white;
-        }
-        .bubble {
-            position: absolute; border-radius: 50%; opacity: 0.15; filter: blur(80px); animation: float 15s infinite ease-in-out;
-        }
-        .b-blue { width: 400px; height: 400px; background: var(--g-blue); top: -10%; left: -10%; }
-        .b-red { width: 300px; height: 300px; background: var(--g-red); top: 20%; right: -5%; animation-delay: -5s; }
-        .b-yellow { width: 350px; height: 350px; background: var(--g-yellow); bottom: -10%; left: 30%; animation-delay: -8s; }
-        .b-green { width: 250px; height: 250px; background: var(--g-green); bottom: 10%; right: 10%; animation-delay: -12s; }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(30px, -30px); }
-        }
-
-        /* 2. TOP NAV (Gmail Style) */
+        /* 1. TOP NAV */
         .top-nav {
             display: flex; justify-content: flex-end; align-items: center; padding: 20px 30px; gap: 20px;
         }
-        .nav-link { text-decoration: none; color: var(--text-dark); font-size: 0.9rem; }
+        .nav-link { text-decoration: none; color: var(--text-dark); font-size: 0.9rem; font-weight: 500; }
         .nav-link:hover { text-decoration: underline; }
         .profile-icon {
             width: 32px; height: 32px; background: var(--g-blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: default;
         }
 
-        /* 3. CENTER STAGE */
+        /* 2. MAIN LOGO AREA */
         .center-stage {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding-top: 5vh;
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
+            display: flex; flex-direction: column; align-items: center; padding-top: 5vh; flex: 1;
         }
-
-        /* LOGO */
-        .logo-area { text-align: center; margin-bottom: 30px; }
+        .logo-area { text-align: center; margin-bottom: 30px; z-index: 10; }
         .logo-area h1 { font-size: 4.5rem; letter-spacing: -2px; line-height: 1; margin-bottom: 10px; }
         .g-blue { color: var(--g-blue); } .g-red { color: var(--g-red); } .g-yellow { color: var(--g-yellow); } .g-green { color: var(--g-green); }
         .subtitle { color: var(--text-gray); font-size: 1.1rem; }
 
-        /* SEARCH TABS */
-        .search-tabs-container {
+        /* 3. INTERACTIVE FLOATING BUBBLES (NAVIGATION) */
+        .bubble-nav-container {
+            position: relative;
+            height: 250px;
             width: 100%;
+            max-width: 600px;
             display: flex;
             justify-content: center;
+            align-items: center;
             margin-bottom: 40px;
         }
-        .tabs {
-            background: white;
-            box-shadow: 0 1px 6px rgba(32,33,36,0.28);
-            border-radius: 24px;
-            padding: 5px;
+
+        .nav-bubble {
+            position: absolute;
+            border-radius: 50%;
             display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .tab-btn {
-            background: transparent;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            color: var(--text-gray);
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: float-anim 6s infinite ease-in-out;
+            font-weight: 600;
+            text-align: center;
+            border: none;
         }
-        .tab-btn:hover { background-color: var(--pill-bg); color: var(--text-dark); }
-        .tab-btn.active { background-color: var(--pill-hover); color: var(--g-blue); font-weight: 500; }
 
-        /* CONTENT DISPLAY */
-        .content-display { width: 90%; min-height: 300px; position: relative; padding-bottom: 50px; }
-        .tab-content { display: none; animation: fadeIn 0.4s ease; }
-        .active-content { display: block; }
+        .nav-bubble:hover { transform: scale(1.1) !important; box-shadow: 0 15px 30px rgba(0,0,0,0.2); z-index: 100; }
+        .nav-bubble i { font-size: 1.5rem; margin-bottom: 5px; }
+        .nav-bubble span { font-size: 0.9rem; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        /* Bubble Positioning & Colors */
+        .nb-exp {
+            width: 140px; height: 140px; background: var(--g-blue);
+            top: 20px; left: 20%; animation-delay: 0s;
+        }
+        .nb-lit {
+            width: 130px; height: 130px; background: var(--g-yellow);
+            bottom: 20px; left: 40%; animation-delay: -2s;
+        }
+        .nb-imp {
+            width: 120px; height: 120px; background: var(--g-red);
+            top: 40px; right: 20%; animation-delay: -4s;
+        }
+        .nb-con {
+            width: 100px; height: 100px; background: var(--g-green);
+            bottom: 40px; right: 40%; animation-delay: -1s;
+        }
+
+        @keyframes float-anim {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* 4. CONTENT DISPLAY AREA */
+        .content-display {
+            width: 90%;
+            max-width: 800px;
+            min-height: 400px;
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .section-content {
+            display: none;
+            animation: slideUp 0.5s ease forwards;
+        }
+        .section-content.active { display: block; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* CARDS & COMPONENTS */
-        .card-simple {
-            background: white; border: 1px solid #dfe1e5; border-radius: 12px; padding: 25px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        .card-simple h3 { margin-bottom: 15px; font-weight: 500; color: var(--g-blue); }
-        .card-simple p { line-height: 1.6; color: var(--text-dark); margin-bottom: 15px; }
-        .tags-cloud { margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
-        .tags-cloud span { background: var(--pill-bg); padding: 6px 15px; border-radius: 100px; font-size: 0.85rem; color: var(--text-dark); border: 1px solid #eee; }
+        /* Cards & Typography */
+        h2 { font-size: 1.8rem; margin-bottom: 20px; color: var(--text-dark); display: flex; align-items: center; gap: 10px; }
+        p { line-height: 1.6; margin-bottom: 15px; color: var(--text-dark); }
+        .highlight { font-weight: 600; color: var(--g-blue); }
 
-        /* TIMELINE (Experience) */
-        .timeline-clean .timeline-item {
-            display: flex; gap: 20px; padding-bottom: 25px; border-left: 2px solid var(--pill-bg); padding-left: 20px; margin-left: 10px; position: relative;
+        /* Timeline Styles */
+        .timeline-item {
+            padding-left: 20px; border-left: 3px solid #f1f3f4; margin-bottom: 20px; position: relative;
         }
-        .timeline-clean .timeline-item::before {
-            content: ''; position: absolute; left: -6px; top: 0; width: 10px; height: 10px; background: var(--g-blue); border-radius: 50%;
+        .timeline-item::before {
+            content: ''; position: absolute; left: -8px; top: 5px; width: 13px; height: 13px; background: var(--g-blue); border-radius: 50%;
         }
-        .time { width: 120px; font-size: 0.85rem; color: var(--text-gray); flex-shrink: 0; padding-top: 2px; font-weight: 500; }
-        .role-info h4 { font-weight: 500; margin-bottom: 2px; font-size: 1.1rem; }
-        .role-info p { color: var(--text-dark); margin-bottom: 5px; font-weight: 400; }
-        .role-info small { color: var(--text-gray); display: block; line-height: 1.4; }
+        .t-date { font-size: 0.85rem; color: var(--text-gray); font-weight: 600; text-transform: uppercase; }
+        .t-role { font-size: 1.1rem; font-weight: 600; margin: 5px 0 2px; }
+        .t-company { color: var(--text-gray); font-weight: 500; margin-bottom: 8px; display: block; }
+        .t-desc { font-size: 0.95rem; color: var(--text-dark); }
 
-        /* STATS GRID */
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .stat-box {
-            background: white; border: 1px solid #dfe1e5; border-radius: 12px; padding: 30px; text-align: center; transition: 0.3s;
+        /* Stats Grid */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
+        .stat-card { background: #fff; border: 1px solid #eee; padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .stat-card h3 { font-size: 2rem; margin-bottom: 5px; }
+        .stat-card p { font-size: 0.9rem; color: var(--text-gray); }
+
+        /* Literary List */
+        .book-card { display: flex; gap: 20px; background: #fffdf5; padding: 20px; border-radius: 10px; border: 1px solid #f0ebce; margin-bottom: 20px; }
+        .book-icon { font-size: 2rem; color: var(--g-yellow); }
+
+        /* Footer */
+        footer {
+            margin-top: 50px; padding: 20px; text-align: center; font-size: 0.9rem; color: var(--text-gray); border-top: 1px solid #eee;
         }
-        .stat-box:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.1); transform: translateY(-5px); }
-        .stat-box h2 { font-size: 2.5rem; margin-bottom: 5px; }
-        .stat-box p { font-size: 0.9rem; color: var(--text-gray); font-weight: 500; }
 
-        /* CREATIVE LIST */
-        .clean-list { list-style: none; padding-left: 0; }
-        .clean-list li { padding: 12px 0; border-bottom: 1px solid #eee; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; }
-        .clean-list li i { color: var(--g-yellow); }
-
-        /* FOOTER */
-        .bottom-bar {
-            background: #f2f2f2; padding: 15px 30px; font-size: 0.9rem; color: var(--text-gray); border-top: 1px solid #dadce0; text-align: center;
-        }
-        .bottom-bar a { color: var(--text-gray); text-decoration: none; margin: 0 10px; }
-
+        /* Responsive */
         @media (max-width: 600px) {
             .logo-area h1 { font-size: 3rem; }
-            .tabs { flex-wrap: wrap; justify-content: center; }
-            .timeline-clean .timeline-item { flex-direction: column; gap: 5px; }
-            .stats-grid { grid-template-columns: 1fr; }
+            .bubble-nav-container { height: 300px; }
+            .nb-exp { left: 5%; width: 100px; height: 100px; }
+            .nb-imp { right: 5%; width: 100px; height: 100px; }
+            .nb-lit { left: 25%; bottom: 10px; width: 90px; height: 90px; }
+            .nb-con { right: 25%; bottom: 30px; width: 80px; height: 80px; }
         }
     </style>
 </head>
 <body>
-
-    <div class="bubbles">
-        <div class="bubble b-blue"></div>
-        <div class="bubble b-red"></div>
-        <div class="bubble b-yellow"></div>
-        <div class="bubble b-green"></div>
-    </div>
 
     <header class="top-nav">
         <a href="mailto:niharikasrivastava1998@gmail.com" class="nav-link">Email</a>
@@ -195,148 +189,152 @@
             <p class="subtitle">Storyteller. Strategist. 8 Years of Impact.</p>
         </div>
 
-        <div class="search-tabs-container">
-            <div class="tabs">
-                <button class="tab-btn active" onclick="openTab(event, 'profile')">
-                    <i class="fas fa-user"></i> Profile
-                </button>
-                <button class="tab-btn" onclick="openTab(event, 'experience')">
-                    <i class="fas fa-briefcase"></i> Experience
-                </button>
-                <button class="tab-btn" onclick="openTab(event, 'impact')">
-                    <i class="fas fa-chart-pie"></i> Metrics
-                </button>
-                <button class="tab-btn" onclick="openTab(event, 'creative')">
-                    <i class="fas fa-pen-fancy"></i> Creative
-                </button>
-            </div>
+        <div class="bubble-nav-container">
+            <button class="nav-bubble nb-exp" onclick="showSection('experience')">
+                <i class="fas fa-briefcase"></i>
+                <span>Experience</span>
+            </button>
+            
+            <button class="nav-bubble nb-imp" onclick="showSection('impact')">
+                <i class="fas fa-chart-line"></i>
+                <span>Impact</span>
+            </button>
+
+            <button class="nav-bubble nb-lit" onclick="showSection('literary')">
+                <i class="fas fa-feather-alt"></i>
+                <span>Literary</span>
+            </button>
+
+            <button class="nav-bubble nb-con" onclick="scrollToFooter()">
+                <i class="fas fa-envelope"></i>
+                <span>Contact</span>
+            </button>
         </div>
 
         <div class="content-display">
             
-            <div id="profile" class="tab-content active-content">
-                <div class="card-simple">
-                    [cite_start]<h3>About Me [cite: 434]</h3>
-                    <p>I build communities and drive growth. [cite_start]Currently a <strong>Social Media Manager at Bajaj Finance Limited</strong> [cite: 458][cite_start], I specialize in transforming brand stories into measurable revenue[cite: 437].</p>
-                    <div class="tags-cloud">
-                        [cite_start]<span>Content Strategy [cite: 485]</span>
-                        [cite_start]<span>Community Management [cite: 446]</span>
-                        [cite_start]<span>AI Tools (Gemini/ChatGPT) [cite: 500]</span>
-                    </div>
+            <div id="welcome" class="section-content active" style="text-align: center; color: #777;">
+                <p>Select a floating bubble above to explore my journey.</p>
+            </div>
+
+            <div id="experience" class="section-content">
+                <h2><i class="fas fa-briefcase" style="color: var(--g-blue);"></i> Work History</h2>
+                <hr style="border:0; border-top:1px solid #eee; margin-bottom:20px;">
+                
+                <div class="timeline-item">
+                    <div class="t-date">Aug 2023 - Present</div>
+                    <div class="t-role">Social Media Manager</div>
+                    <span class="t-company">Bajaj Finance Limited</span>
+                    <p class="t-desc">Managing 1M+ LinkedIn community and driving recruitment marketing. Grew Instagram from 2K to 12K followers with 40% engagement.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="t-date">Apr 2022 - Jul 2023</div>
+                    <div class="t-role">Technical Content Manager</div>
+                    <span class="t-company">E2E Networks</span>
+                    <p class="t-desc">Scaled LinkedIn to 1M+ members. Achieved 500% follower growth in 6 months.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="t-date">Dec 2021 - Mar 2022</div>
+                    <div class="t-role">Marketing Specialist</div>
+                    <span class="t-company">Scaler Academy</span>
+                    <p class="t-desc">Counseled 500+ IT professionals, optimizing lead generation and exceeding revenue targets.</p>
                 </div>
             </div>
 
-            <div id="experience" class="tab-content">
-                <div class="timeline-clean">
-                    <div class="timeline-item">
-                        <span class="time">2023 - Present</span>
-                        <div class="role-info">
-                            <h4>Bajaj Finance Limited</h4>
-                            [cite_start]<p>Social Media Manager [cite: 458]</p>
-                            <small>Leading brand awareness campaigns & recruitment marketing.</small>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <span class="time">2022 - 2023</span>
-                        <div class="role-info">
-                            <h4>E2E Networks</h4>
-                            [cite_start]<p>Technical Content Manager [cite: 453]</p>
-                            [cite_start]<small>Scaled LinkedIn to 1M+ members[cite: 471].</small>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <span class="time">2021 - 2022</span>
-                        <div class="role-info">
-                            <h4>Scaler Academy</h4>
-                            [cite_start]<p>Marketing Specialist [cite: 456]</p>
-                            [cite_start]<small>Counseled 500+ IT professionals[cite: 479].</small>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <span class="time">2021</span>
-                        <div class="role-info">
-                            <h4>PlanetSpark</h4>
-                            [cite_start]<p>Marketing Specialist [cite: 450]</p>
-                            [cite_start]<small>Exceeded revenue targets by 200-300%[cite: 481].</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="impact" class="tab-content">
+            <div id="impact" class="section-content">
+                <h2><i class="fas fa-chart-line" style="color: var(--g-red);"></i> Key Metrics</h2>
+                <hr style="border:0; border-top:1px solid #eee; margin-bottom:20px;">
+                
                 <div class="stats-grid">
-                    <div class="stat-box">
-                        <h2 class="g-blue">1M+</h2>
-                        [cite_start]<p>LinkedIn Community [cite: 446]</p>
+                    <div class="stat-card">
+                        <h3 style="color: var(--g-blue);">1M+</h3>
+                        <p>LinkedIn Community</p>
                     </div>
-                    <div class="stat-box">
-                        <h2 class="g-red">500%</h2>
-                        [cite_start]<p>Follower Growth [cite: 440]</p>
+                    <div class="stat-card">
+                        <h3 style="color: var(--g-red);">500%</h3>
+                        <p>Follower Growth</p>
                     </div>
-                    <div class="stat-box">
-                        <h2 class="g-green">300%</h2>
-                        <p>Rev. [cite_start]Target Hit [cite: 443]</p>
+                    <div class="stat-card">
+                        <h3 style="color: var(--g-green);">300%</h3>
+                        <p>Revenue Target Hit</p>
                     </div>
-                    <div class="stat-box">
-                        <h2 class="g-yellow">12K</h2>
-                        [cite_start]<p>Insta Followers [cite: 466]</p>
+                    <div class="stat-card">
+                        <h3 style="color: var(--g-yellow);">12K</h3>
+                        <p>Instagram Followers</p>
                     </div>
+                </div>
+                <div style="margin-top: 30px;">
+                    <h3><i class="fas fa-tools"></i> Toolkit</h3>
+                    <p>AI Tools (Gemini, ChatGPT), Google Analytics, Semrush, Hootsuite, Canva.</p>
                 </div>
             </div>
 
-            <div id="creative" class="tab-content">
-                <div class="card-simple">
-                    <h3>Published Author</h3>
-                    [cite_start]<p>My novel, <em>"To Be Continued..."</em>, is available on Amazon and Blue Rose[cite: 428].</p>
-                    <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
-                    <h3>Awards & Honors</h3>
-                    <ul class="clean-list">
-                        [cite_start]<li><i class="fas fa-award"></i> 100 Inspiring Authors of India (2018) [cite: 514]</li>
-                        [cite_start]<li><i class="fas fa-award"></i> Literary Captain - StoryMirror [cite: 518]</li>
-                        [cite_start]<li><i class="fas fa-award"></i> Wingword Poetry Prize (Merit) [cite: 527]</li>
-                    </ul>
+            <div id="literary" class="section-content">
+                <h2><i class="fas fa-feather-alt" style="color: var(--g-yellow);"></i> Literary Contributions</h2>
+                <hr style="border:0; border-top:1px solid #eee; margin-bottom:20px;">
+
+                <div class="book-card">
+                    <i class="fas fa-book book-icon"></i>
+                    <div>
+                        <h4>Published Novel</h4>
+                        <p><strong>"To Be Continued..."</strong></p>
+                        <p>Available on Amazon and Blue Rose. A debut novel that established my voice as a storyteller.</p>
+                    </div>
                 </div>
+
+                <h3>Honors & Awards</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                        <i class="fas fa-award" style="color: var(--g-blue); margin-right: 10px;"></i> 
+                        <strong>100 Inspiring Authors of India (2018)</strong> - The Indian Awaz
+                    </li>
+                    <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                        <i class="fas fa-award" style="color: var(--g-red); margin-right: 10px;"></i> 
+                        <strong>Literary Captain</strong> - StoryMirror
+                    </li>
+                    <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                        <i class="fas fa-award" style="color: var(--g-green); margin-right: 10px;"></i> 
+                        <strong>Wingword Poetry Prize (Merit)</strong> - 2018
+                    </li>
+                    <li style="padding: 10px 0;">
+                        <i class="fas fa-star" style="color: var(--g-yellow); margin-right: 10px;"></i> 
+                        <strong>Teach India Intern</strong> - Times of India CSR Initiative
+                    </li>
+                </ul>
             </div>
 
         </div>
+
     </main>
 
-    <footer class="bottom-bar">
-        <p>India • <a href="mailto:niharikasrivastava1998@gmail.com">Contact</a> • <a href="https://www.linkedin.com/in/niharika-srivastava-47240a185">LinkedIn</a></p>
+    <footer id="footer">
+        <p>Connect with me for collaborations</p>
+        <p style="margin-top: 5px;">
+            <a href="mailto:niharikasrivastava1998@gmail.com" style="color: var(--g-blue); text-decoration: none; font-weight: bold;">niharikasrivastava1998@gmail.com</a>
+        </p>
     </footer>
 
     <script>
-        function openTab(evt, tabName) {
-            var i, tabContent, tabBtn;
-            
-            // Hide all tab contents
-            tabContent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabContent.length; i++) {
-                tabContent[i].style.display = "none";
-                tabContent[i].classList.remove("active-content");
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section-content');
+            sections.forEach(sec => sec.classList.remove('active'));
+
+            // Show selected section
+            const target = document.getElementById(sectionId);
+            if(target) {
+                target.classList.add('active');
             }
 
-            // Remove active class from buttons
-            tabBtn = document.getElementsByClassName("tab-btn");
-            for (i = 0; i < tabBtn.length; i++) {
-                tabBtn[i].className = tabBtn[i].className.replace(" active", "");
-            }
-
-            // Show current tab and add active class to button
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
+            // Optional: Hide welcome message if it's currently active
+            document.getElementById('welcome').style.display = 'none';
         }
 
-        // Mouse Movement Parallax for Bubbles
-        document.addEventListener('mousemove', (e) => {
-            const bubbles = document.querySelectorAll('.bubble');
-            bubbles.forEach((b, index) => {
-                const speed = (index + 1) * 20;
-                const xOff = (window.innerWidth / 2 - e.clientX) / speed;
-                const yOff = (window.innerHeight / 2 - e.clientY) / speed;
-                b.style.transform = `translate(${xOff}px, ${yOff}px)`;
-            });
-        });
+        function scrollToFooter() {
+            document.getElementById('footer').scrollIntoView({ behavior: 'smooth' });
+        }
     </script>
 </body>
 </html>
